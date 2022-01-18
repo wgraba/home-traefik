@@ -12,10 +12,13 @@ services:
       --providers.file.watch=true
       --entrypoints.web-secure.address=:443
       --entrypoints.web.address=:80
+      --entrypoints.minio.address=:9000
+      --entrypoints.minio-console.address=:9001
     ports:
       - "80:80"
       - "443:443"
       - "9000:9000"
+      - "9001:9001"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
