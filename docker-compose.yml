@@ -5,7 +5,8 @@ services:
     image: traefik:v2.5
     # Enables the web UI and tells Traefik to listen to docker
     command: 
-      --api.insecure=true 
+      --api=true 
+      --api.dashboard=true 
       --providers.docker 
       --providers.docker.network="web"
       --providers.file.directory=/config/
@@ -15,9 +16,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "9000:9000"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
+      # - "9000:9000"
+      # - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
@@ -25,8 +25,13 @@ services:
     networks:
       - web
     restart: unless-stopped
+    labels:
+      - "traefik.http.routers.api.rule=Host(`traefik-1.federation.home`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.usersfile=/config/usersfile"
+      - "traefik.http.routers.api.tls=true"
 
 networks: 
   web:
     external: true
-

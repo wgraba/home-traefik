@@ -1,3 +1,5 @@
 # No private keys
 **/*.key
 
+# user/passwords
+config/usersfile
