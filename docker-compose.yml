@@ -29,7 +29,7 @@ services:
       - web
     restart: unless-stopped
     labels:
-      - "traefik.http.routers.api.rule=Host(`traefik-1.federation.home`)"
+      - "traefik.http.routers.api.rule=Host(`traefik-2.federation.home`)"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.usersfile=/config/usersfile"
